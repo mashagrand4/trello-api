@@ -1,8 +1,19 @@
 import styled from 'styled-components';
 import React from 'react';
+import PropTypes from "prop-types";
 
-export const Button = ({ name, onClickHandler }) => {
+const Button = ({ name, onClickHandler }) => {
   return <ButtonField onClick={onClickHandler}>{name}</ButtonField>;
+};
+
+Button.propTypes = {
+  name: PropTypes.string,
+  onClickHandler: PropTypes.func,
+};
+
+Button.defaultProps = {
+  name: '',
+  onClickHandler: {},
 };
 
 const ButtonField = styled.button`
@@ -10,3 +21,5 @@ const ButtonField = styled.button`
   padding: 0.7rem;
   border: 0;
 `;
+
+export default Button;

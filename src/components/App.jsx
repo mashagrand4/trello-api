@@ -1,14 +1,12 @@
 import React from 'react';
-import SearchBar from '../containers/SearchBar';
-import List from '../containers/List';
+import ProductList from "../containers/ProductList";
+import Header from "./Header";
 
 const App = () => {
   return (
     <>
-      <SearchBar />
-      <div />
-      <div />
-      <List />
+      <Header />
+      <ProductList />
     </>
   );
 };
