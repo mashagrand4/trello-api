@@ -7,9 +7,9 @@ router.get('/', (req, res) => {
     res.redirect('/boards');
 });
 router.get('/boards', Board.getAllBoards);
-router.get('/boards/:boardId', Board.getBoardById);
+router.get('/boards/:boardName', Board.getBoardByName);
 router.post('/boards', Board.createBoard);
-router.put('/boards/:boardId', Board.updateBoard);
-router.delete('/boards/:boardId', Board.deleteBoard);
+router.put('/boards/:boardName', Board.updateBoard);
+router.delete('/boards/:boardName', Board.deleteBoard);
 
 export default router;

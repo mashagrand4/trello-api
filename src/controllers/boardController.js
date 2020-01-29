@@ -4,16 +4,17 @@ const logger = new LoggerService('app');
 
 export default class Board {
     static async getAllBoards(req, res) {
-        await logger.info("Request received at /test", req.body);
-        BoardService.createBoard(req.body);
-        res.send('get all boards');
+        const boards = await BoardService.getAllBoards();
+        res.send(boards);
     };
 
-    static getBoardById(req, res) {
+    static getBoardByName(req, res) {
         res.send('get board by id');
     };
 
-    static createBoard(req, res) {
+    static async createBoard(req, res) {
+        await logger.info("Request received at /test", req.body);
+        BoardService.createBoard(req.body);
         res.send('create board');
     };
 

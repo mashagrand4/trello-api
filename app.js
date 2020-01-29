@@ -8,6 +8,7 @@ import indexRouter from './src/routes';
 import boardsRouter from './src/routes/boards';
 import cardsRouter from './src/routes/cards';
 import validator from "./src/middlewares/validateShema";
+import checker from "./src/middlewares/checkUserPermissions";
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -22,6 +23,7 @@ app.use(session({
     store: new session.MemoryStore(),
 }));
 app.use(validator);
+app.use(checker);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
