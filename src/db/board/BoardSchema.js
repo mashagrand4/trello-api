@@ -8,13 +8,10 @@ const BoardSchema = Joi.object({
         .required(),
 
     color: Joi.string()
-        .alphanum()
-        .min(6)
         .max(30)
         .required(),
 
     description: Joi.string()
-        .alphanum()
         .min(3)
         .max(150)
         .required(),

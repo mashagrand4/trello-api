@@ -1,3 +1,7 @@
 {
-
+  "name": "board1",
+  "color": "#fff",
+  "description": "js board",
+  "create_at": "1385484545",
+  "cards": []
 }

@@ -1,6 +1,6 @@
 import winston from "winston";
 
-export default class Logger {
+export default class LoggerService {
     constructor() {
         console.log(process.env.NODE_ENV);
         if(process.env.NODE_ENV === 'production') {
