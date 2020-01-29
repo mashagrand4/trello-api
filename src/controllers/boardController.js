@@ -1,5 +1,9 @@
+import Logger from '../services/logger';
+const logger = new Logger('app');
+
 export default class Board {
-    static getAllBoards(req, res) {
+    static async getAllBoards(req, res) {
+        await logger.info("Request received at /test", req.body);
         res.send('get all boards');
     };
 

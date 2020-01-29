@@ -7,13 +7,13 @@ import expressWs from 'express-ws';
 import indexRouter from './src/routes';
 import boardsRouter from './src/routes/boards';
 import cardsRouter from './src/routes/cards';
+import validator from "./src/middlewares/validateShema";
 
 const port = process.env.PORT || 3000;
 const app = express();
 expressWs(app);
 
 app.use(cookieParser());
-
 app.use(session({
     key: 'authInfo',
     secret: 'liveAgent',
@@ -21,7 +21,7 @@ app.use(session({
     resave: false,
     store: new session.MemoryStore(),
 }));
-
+app.use(validator);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -30,5 +30,5 @@ app.use(boardsRouter);
 app.use(cardsRouter);
 
 app.listen(port, function () {
-    console.log('NODE_ENV: ', port);
+    console.log('PORT: ', port);
 });
