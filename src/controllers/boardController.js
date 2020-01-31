@@ -4,25 +4,53 @@ const logger = new LoggerService('app');
 
 export default class Board {
     static async getAllBoards(req, res) {
-        const boards = await BoardService.getAllBoards();
-        res.send(boards);
+        try {
+            const boards = await BoardService.getAllBoards();
+            res.send(boards);
+        } catch (error) {
+            res.status(400).json(error);
+            await logger.error(error);
+        }
+
     };
 
-    static getBoardByName(req, res) {
-        res.send('get board by id');
+    static async getBoardByName(req, res) {
+        try {
+            const board = await BoardService.getBoardByName(req.query);
+            res.send(board);
+        } catch (error) {
+            res.status(400).json(error);
+            await logger.error(error);
+        }
     };
 
     static async createBoard(req, res) {
-        await logger.info("Request received at /test", req.body);
-        BoardService.createBoard(req.body);
-        res.send('create board');
+        try {
+            const board = await BoardService.createBoard(req.body);
+            res.send(board);
+        } catch (error) {
+            res.status(400).json(error);
+            await logger.error(error);
+        }
     };
 
-    static updateBoard(req, res) {
-        res.send('update board');
+    static async updateBoard(req, res) {
+        try {
+            const board = await BoardService.updateBoard(req.body);
+            res.send(board);
+        } catch (error) {
+            res.status(400).json(error);
+            await logger.error(error);
+        }
     };
 
-    static deleteBoard(req, res) {
-        res.send('delete board');
+    static async deleteBoard(req, res) {
+        try {
+            const board = await BoardService.deleteBoard(req.query);
+            res.send(board);
+        } catch (error) {
+            res.status(400).json(error);
+            await logger.error(error);
+        }
     };
 }

@@ -1,4 +1,4 @@
-const checker = (req, res, next) => {
+const checkUserPermissions = (req, res, next) => {
     const {role} = req.headers;
 
     if (role !== "admin") {
@@ -8,4 +8,4 @@ const checker = (req, res, next) => {
     next();
 };
 
-export default checker;
+export default checkUserPermissions;

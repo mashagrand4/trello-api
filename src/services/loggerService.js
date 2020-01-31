@@ -2,7 +2,6 @@ import winston from "winston";
 
 export default class LoggerService {
     constructor() {
-        console.log(process.env.NODE_ENV);
         if(process.env.NODE_ENV === 'production') {
             this.logger = winston.createLogger({
                 level: 'info',

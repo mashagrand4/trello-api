@@ -1,9 +1,10 @@
 import express from 'express';
+import boardsRouter from './boards';
+import cardsRouter from './cards';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.redirect('/boards');
-});
+router.use(boardsRouter);
+router.use(cardsRouter);
 
 export default router;

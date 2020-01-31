@@ -14,7 +14,8 @@
     "express-session": "^1.17.0",
     "express-ws": "^4.0.0",
     "link-module-alias": "^1.2.0",
-    "module-alias": "^2.2.2"
+    "module-alias": "^2.2.2",
+    "body-parser": "latest"
   },
   "_moduleAliases": {
     "@src": "src"

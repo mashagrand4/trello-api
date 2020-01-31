@@ -15,11 +15,6 @@ const BoardSchema = Joi.object({
         .min(3)
         .max(150)
         .required(),
-
-    create_at: [
-        Joi.string(),
-        Joi.number()
-    ],
 });
 
 export default BoardSchema;
