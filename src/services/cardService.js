@@ -10,7 +10,6 @@ export default class CardService {
         return await Card.createCard(boardName, card);
     }
 
-
     static async updateCard(card) {
         return await Card.updateCard(card);
     }

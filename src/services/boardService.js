@@ -13,7 +13,6 @@ export default class BoardService {
         return await Board.createBoard(board);
     }
 
-
     static async updateBoard(boardName) {
         return await Board.updateBoard(boardName);
     }
