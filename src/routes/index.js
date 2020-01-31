@@ -4,7 +4,7 @@ import cardsRouter from './cards';
 
 const router = express.Router();
 
-router.use(boardsRouter);
-router.use(cardsRouter);
+router.use('/boards', boardsRouter);
+router.use('/cards', cardsRouter);
 
 export default router;

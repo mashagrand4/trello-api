@@ -5,9 +5,9 @@ import validateSchema from "../middlewares/validateSсhema";
 
 const router = express.Router();
 
-router.get('/cards', Card.getAllCards);
-router.post('/cards', [checkUserPermissions, validateSchema], Card.createCard);
-router.put('/cards/:cardName',[checkUserPermissions, validateSchema],  Card.updateCard);
-router.delete('/cards/:cardName', [checkUserPermissions], Card.deleteCard);
+router.get('/', Card.getAllCards);
+router.post('/', [checkUserPermissions, validateSchema], Card.createCard);
+router.put('/:cardName',[checkUserPermissions, validateSchema],  Card.updateCard);
+router.delete('/:cardName', [checkUserPermissions], Card.deleteCard);
 
 export default router;
