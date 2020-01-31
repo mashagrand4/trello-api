@@ -16,7 +16,8 @@ export default class Board {
 
     static async getBoardByName(req, res) {
         try {
-            const board = await BoardService.getBoardByName(req.query);
+            const {boardName} = req.query;
+            const board = await BoardService.getBoardByName(boardName);
             res.send(board);
         } catch (error) {
             res.status(400).json(error);
@@ -26,8 +27,8 @@ export default class Board {
 
     static async createBoard(req, res) {
         try {
-            const board = await BoardService.createBoard(req.body);
-            res.send(board);
+            const status = await BoardService.createBoard(req.body);
+            res.send(status);
         } catch (error) {
             res.status(400).json(error);
             await logger.error(error);
