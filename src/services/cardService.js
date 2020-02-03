@@ -6,7 +6,6 @@ export default class CardService {
     }
 
     static async createCard(boardName, card) {
-        console.log(card);
         return await Card.createCard(boardName, card);
     }
 

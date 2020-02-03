@@ -5,10 +5,10 @@ import checkUserPermissions from "../middlewares/checkUserPermissions";
 
 const router = express.Router();
 
-router.get('/', Board.getAllBoards);
+router.get('/getAllBoards', Board.getAllBoards);
 router.get('/getBoardByName', Board.getBoardByName);
-router.post('/', checkUserPermissions, validateSchema, Board.createBoard);
-router.put('/', checkUserPermissions, validateSchema, Board.updateBoard);
-router.delete('/', checkUserPermissions, Board.deleteBoard);
+router.post('/createBoard', checkUserPermissions, validateSchema, Board.createBoard);
+router.put('/updateBoard', checkUserPermissions, validateSchema, Board.updateBoard);
+router.delete('/deleteBoard', checkUserPermissions, Board.deleteBoard);
 
 export default router;

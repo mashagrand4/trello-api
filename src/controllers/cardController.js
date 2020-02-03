@@ -5,7 +5,7 @@ const logger = new LoggerService('app');
 export default class Card {
     static async getAllCards(req, res) {
         try {
-            const {boardName} = req.query;
+            const {boardName = ''} = req.query;
             res.send(await CardService.getAllCards(boardName));
         } catch (error) {
             res.status(400).json(error);
@@ -38,7 +38,7 @@ export default class Card {
 
     static async deleteCard(req, res) {
         try {
-            const {cardName} = req.query;
+            const {cardName = ''} = req.query;
             res.send(await CardService.deleteCard(cardName));
         } catch (error) {
             res.status(400).json(error);

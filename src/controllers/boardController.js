@@ -47,7 +47,8 @@ export default class Board {
 
     static async deleteBoard(req, res) {
         try {
-            const board = await BoardService.deleteBoard(req.query);
+            const {boardName} = req.query;
+            const board = await BoardService.deleteBoard(boardName);
             res.send(board);
         } catch (error) {
             res.status(400).json(error);
