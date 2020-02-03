@@ -6,28 +6,21 @@ export default class Card {
         return new Promise((resolve, reject) => {
             fs.readFile('./src/store/cards.json', (err, data) => {
                 if (err) throw err;
-                resolve(data.toString());
+                const cards = data.toString();
+                resolve(cards);
             });
         });
 
     }
 
-    static createCard(boardName, card){
-        return new Promise(async (resolve, reject) => {
-            const board = await Board.getBoardByName(boardName);
-            await Board.updateBoard({
-                ...board,
-                cards: board.cards.concat(card.name)
-            });
+    static createCard(card){
+        return new Promise( (resolve, reject) => {
             fs.readFile('./src/store/cards.json', (err, data) => {
                 if (err) throw err;
                 let cardsArray = [];
                 if (data.toString()) {
                     cardsArray = JSON.parse(data.toString());
-                    cardsArray.push({
-                        ...card,
-                        boardName
-                    });
+                    cardsArray.push(card);
                     let writeStream = fs.createWriteStream('./src/store/cards.json', { flags: 'w' });
                     writeStream.write(JSON.stringify(cardsArray, null, 4));
                     writeStream.end();

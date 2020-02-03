@@ -10,7 +10,12 @@ export default class BoardService {
     }
 
     static createBoard(board) {
-        return Board.createBoard(board);
+        const boardToCreate = {
+            ...board,
+            create_at: Date.now(),
+            cards: [],
+        };
+        return Board.createBoard(boardToCreate);
     }
 
     static updateBoard(boardName) {

@@ -35,11 +35,8 @@ export default class Board {
                 if (data.toString()) {
                     boardsArray = JSON.parse(data.toString());
                 }
-                boardsArray.push({
-                    ...board,
-                    create_at: Date.now(),
-                    cards: [],
-                });
+                boardsArray.push(board);
+
                 let writeStream = fs.createWriteStream('./src/store/boards.json', { flags: 'w' });
                 writeStream.write(JSON.stringify(boardsArray, null, 4));
                 writeStream.end();
