@@ -3,13 +3,14 @@ import BoardService from "../services/boardService";
 const logger = new LoggerService('app');
 
 export default class Board {
-    static async getAllBoards(req, res) {
+    static async getAllBoards(req, res, next) {
+        console.log('controller');
         try {
             const boards = await BoardService.getAllBoards();
+            const a = JSON.parse([]);
             res.send(boards);
         } catch (error) {
-            res.status(400).json(error);
-            await logger.error(error);
+            next(error);
         }
 
     };

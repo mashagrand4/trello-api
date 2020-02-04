@@ -16,7 +16,6 @@ export default class Card {
 
     static async createCard(req, res) {
         try {
-            console.log(req);
             const {boardName = ''} = req.query;
             const card = req.body;
             res.send(await CardService.createCard(boardName, card));

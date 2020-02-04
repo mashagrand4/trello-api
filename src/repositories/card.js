@@ -20,15 +20,16 @@ export default class Card {
                 let cardsArray = [];
                 if (data.toString()) {
                     cardsArray = JSON.parse(data.toString());
-                    cardsArray.push(card);
-                    let writeStream = fs.createWriteStream('./src/store/cards.json', { flags: 'w' });
-                    writeStream.write(JSON.stringify(cardsArray, null, 4));
-                    writeStream.end();
-
-                    writeStream.on("finish", () => {
-                        resolve('Card successfully created!')
-                    })
                 }
+                cardsArray.push(card);
+                
+                let writeStream = fs.createWriteStream('./src/store/cards.json', { flags: 'w' });
+                writeStream.write(JSON.stringify(cardsArray, null, 4));
+                writeStream.end();
+
+                writeStream.on("finish", () => {
+                    resolve('Card successfully created!')
+                })
             });
         });
     }

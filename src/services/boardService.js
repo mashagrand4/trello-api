@@ -13,7 +13,6 @@ export default class BoardService {
         const boardToCreate = {
             ...board,
             create_at: Date.now(),
-            cards: [],
         };
         return Board.createBoard(boardToCreate);
     }

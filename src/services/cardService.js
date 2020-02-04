@@ -7,11 +7,6 @@ export default class CardService {
     }
 
     static async createCard(boardName, card) {
-        const board = await Board.getBoardByName(boardName);
-        await Board.updateBoard({
-            ...board,
-            cards: board.cards.concat(card.name)
-        });
         const cardToCreate = {
             ...card,
             boardName
