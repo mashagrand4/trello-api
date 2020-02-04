@@ -1,6 +1,6 @@
 import schema from "./schemas";
 
-const validateSchema = async (req, res, next) => {
+const validateParams = async (req, res, next) => {
     try {
         const result = await schema[req.baseUrl].validateAsync(req.body);
         console.log(result);
@@ -13,4 +13,4 @@ const validateSchema = async (req, res, next) => {
     }
 };
 
-export default validateSchema;
+export default validateParams;

@@ -4,8 +4,8 @@ const logger = new LoggerService('app');
 
 export default class Card {
     static async getAllCards(req, res) {
+        const {boardName} = req.query;
         try {
-            const {boardName = ''} = req.query;
             res.send(await CardService.getAllCards(boardName));
         } catch (error) {
             res.status(400).json(error);
@@ -15,8 +15,8 @@ export default class Card {
     };
 
     static async createCard(req, res) {
+        const {boardName} = req.body;
         try {
-            const {boardName = ''} = req.query;
             const card = req.body;
             res.send(await CardService.createCard(boardName, card));
         } catch (error) {
@@ -26,8 +26,8 @@ export default class Card {
     };
 
     static async updateCard(req, res) {
+        const {card} = req.body;
         try {
-            const card = req.body;
             res.send(await CardService.updateCard(card));
         } catch (error) {
             res.status(400).json(error);
@@ -36,8 +36,8 @@ export default class Card {
     };
 
     static async deleteCard(req, res) {
+        const {cardName} = req.body;
         try {
-            const {cardName = ''} = req.query;
             res.send(await CardService.deleteCard(cardName));
         } catch (error) {
             res.status(400).json(error);

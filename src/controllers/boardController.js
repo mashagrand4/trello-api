@@ -1,13 +1,9 @@
-import LoggerService from '../services/loggerService';
 import BoardService from "../services/boardService";
-const logger = new LoggerService('app');
 
 export default class Board {
     static async getAllBoards(req, res, next) {
-        console.log('controller');
         try {
             const boards = await BoardService.getAllBoards();
-            const a = JSON.parse([]);
             res.send(boards);
         } catch (error) {
             next(error);
@@ -15,45 +11,43 @@ export default class Board {
 
     };
 
-    static async getBoardByName(req, res) {
+    static async getBoardByName(req, res, next) {
+        const {boardName} = req.body;
         try {
-            const {boardName} = req.query;
             const board = await BoardService.getBoardByName(boardName);
             res.send(board);
         } catch (error) {
-            res.status(400).json(error);
-            await logger.error(error);
+            next(error);
         }
     };
 
-    static async createBoard(req, res) {
+    static async createBoard(req, res, next) {
+        const {board} = req.body;
         try {
-            const status = await BoardService.createBoard(req.body);
+            const status = await BoardService.createBoard(board);
             res.send(status);
         } catch (error) {
-            res.status(400).json(error);
-            await logger.error(error);
+            next(error);
         }
     };
 
-    static async updateBoard(req, res) {
+    static async updateBoard(req, res, next) {
+        const {board} = req.body;
         try {
-            const board = await BoardService.updateBoard(req.body);
+            const board = await BoardService.updateBoard(board);
             res.send(board);
         } catch (error) {
-            res.status(400).json(error);
-            await logger.error(error);
+            next(error);
         }
     };
 
-    static async deleteBoard(req, res) {
+    static async deleteBoard(req, res, next) {
+        const {boardName} = req.body;
         try {
-            const {boardName} = req.query;
             const board = await BoardService.deleteBoard(boardName);
             res.send(board);
         } catch (error) {
-            res.status(400).json(error);
-            await logger.error(error);
+            next(error);
         }
     };
 }
