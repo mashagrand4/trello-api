@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import router from './src/routes';
 import logRequests from './src/middlewares/logRequests';
 import logErrors from './src/middlewares/logErrors';
+import unknownRoutesHandle from "./src/middlewares/unknownRoutesHandle";
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(logRequests);
 app.use(router);
+app.use(unknownRoutesHandle);
 app.use(logErrors);
 
 app.listen(port, function () {
