@@ -3,8 +3,7 @@ import BoardService from "../services/boardService";
 export default class Board {
     static async getAllBoards(req, res, next) {
         try {
-            const boards = await BoardService.getAllBoards();
-            res.send(boards);
+            res.send(await BoardService.getAllBoards());
         } catch (error) {
             next(error);
         }
