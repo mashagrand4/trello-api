@@ -17,8 +17,8 @@ export default class BoardService {
         return Board.createBoard(boardToCreate);
     }
 
-    static updateBoard(boardName) {
-        return Board.updateBoard(boardName);
+    static updateBoard(board) {
+        return Board.updateBoard(board);
     }
 
     static deleteBoard(boardName) {

@@ -7,13 +7,13 @@ const BoardSchema = Joi.object({
         .max(30)
         .required(),
 
-    color: Joi.string()
-        .max(30)
-        .required(),
-
     description: Joi.string()
         .min(3)
         .max(150)
+        .required(),
+
+    color: Joi.string()
+        .max(30)
         .required(),
 });
 

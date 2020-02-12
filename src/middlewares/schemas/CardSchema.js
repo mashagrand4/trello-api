@@ -22,9 +22,13 @@ const CardSchema = Joi.object({
     due_date: Joi.string()
         .required(),
 
-    labels:
-        Joi.string()
+    labels: Joi.string()
         .required(),
+
+    boardName: Joi.string()
+        .min(3)
+        .max(30)
+        .required()
 });
 
 export default CardSchema;

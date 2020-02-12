@@ -8,34 +8,30 @@ export default class Board {
         } catch (error) {
             next(error);
         }
-
     };
 
     static async getBoardByName(req, res, next) {
         const {boardName} = req.body;
         try {
-            const board = await BoardService.getBoardByName(boardName);
-            res.send(board);
+            res.send(await BoardService.getBoardByName(boardName));
         } catch (error) {
             next(error);
         }
     };
 
     static async createBoard(req, res, next) {
-        const {board} = req.body;
+        const board = req.body;
         try {
-            const status = await BoardService.createBoard(board);
-            res.send(status);
+            res.send(await BoardService.createBoard(board));
         } catch (error) {
             next(error);
         }
     };
 
     static async updateBoard(req, res, next) {
-        const {board} = req.body;
+        const board = req.body;
         try {
-            const board = await BoardService.updateBoard(board);
-            res.send(board);
+            res.send(await BoardService.updateBoard(board));
         } catch (error) {
             next(error);
         }
@@ -44,8 +40,7 @@ export default class Board {
     static async deleteBoard(req, res, next) {
         const {boardName} = req.body;
         try {
-            const board = await BoardService.deleteBoard(boardName);
-            res.send(board);
+            res.sendStatus(await BoardService.deleteBoard(boardName));
         } catch (error) {
             next(error);
         }

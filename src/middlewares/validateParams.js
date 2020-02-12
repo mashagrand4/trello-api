@@ -1,25 +1,47 @@
-import schema from "./schemas";
+import CardSchema from "./schemas/CardSchema";
 
-const validateParams = async (req, res, next) => {
-    const params = req.body;
-    const types = Object.keys(schema);
-    let paramsType;
+export default {
+    validateBoardName: (req, res, next) => {
+        const params = req.body;
 
-    for(let key in params) {
-        if (params.hasOwnProperty(key) && types.includes(key)) {
-            paramsType = key;
-        }
-    }
-
-    try {
-        const result = await schema[paramsType].validateAsync(params[paramsType]);
-        if (!result) {
-            res.send(result);
+        if (!params || !params.boardName || typeof params.boardName !== "string") {
+            next(new Error('Invalid params'));
         }
         next();
-    } catch (error) {
-        next(error);
-    }
-};
+    },
 
-export default validateParams;
+    validateCardName: (req, res, next) => {
+        const params = req.body;
+
+        if (!params || !params.cardName || typeof params.cardName !== "string") {
+            next(new Error('Invalid params'));
+        }
+        next();
+    },
+
+    validateBoardFields: async (req, res, next) => {
+        const {name, description, color} = req.body;
+        const params = {name, description, color};
+
+        try {
+            await BoardSchema.validateAsync(params);
+            req.body = params;
+            next();
+        } catch (err) {
+            next(new Error('Invalid params'))
+        }
+    },
+
+    validateCardFields: async (req, res, next) => {
+        const {name, description, estimate, status, due_date, labels, boardName} = req.body;
+        const params = {name, description, estimate, status, due_date, labels, boardName};
+
+        try {
+            await CardSchema.validateAsync(params);
+            req.body = params;
+            next();
+        } catch (err) {
+            next(new Error('Invalid params'))
+        }
+    },
+};

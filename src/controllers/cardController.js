@@ -12,16 +12,16 @@ export default class Card {
     };
 
     static async createCard(req, res, next) {
-        const {boardName, card} = req.body;
+        const card = req.body;
         try {
-            res.send(await CardService.createCard(boardName, card));
+            res.send(await CardService.createCard(card));
         } catch (error) {
             next(error);
         }
     };
 
     static async updateCard(req, res, next) {
-        const {card} = req.body;
+        const card = req.body;
         try {
             res.send(await CardService.updateCard(card));
         } catch (error) {
@@ -32,7 +32,7 @@ export default class Card {
     static async deleteCard(req, res, next) {
         const {cardName} = req.body;
         try {
-            res.send(await CardService.deleteCard(cardName));
+            res.sendStatus(await CardService.deleteCard(cardName));
         } catch (error) {
             next(error);
         }

@@ -1,102 +1,77 @@
-import fs from 'fs';
+import {getBoards, setBoards} from "./helpers/boards";
+import ResultFormatter from "./helpers/resultFormatter";
 
-export default class Board {
-    static getAllBoards(){
-        return new Promise((resolve, reject) => {
-            fs.readFile('./src/store/boards.json', (err, data) => {
-                if (err) throw err;
-                resolve(data.toString());
-            });
+export default {
+    getAllBoards: () => {
+        return new Promise(async (resolve, reject) => {
+            const data = await getBoards();
+
+            resolve(new ResultFormatter(data));
         });
+    },
 
-    }
+    getBoardByName: boardName => {
+        return new Promise(async (resolve, reject) => {
+            const boards = await getBoards();
 
-    static getBoardByName(boardName){
-        return new Promise((resolve, reject) => {
-            fs.readFile('./src/store/boards.json', (err, data) => {
-                if (err) throw err;
-                if (data.toString()) {
-                    let boardsArray = JSON.parse(data.toString());
-                    let board = boardsArray.find(board => {
-                        console.log(boardName, board.name);
-                        return board.name === boardName;
-                    });
-                    resolve(board);
+            let board = boards.find(board => {
+                return board.name === boardName;
+            });
+
+            resolve(new ResultFormatter(board));
+        });
+    },
+
+    createBoard: newBoard => {
+        return new Promise(async (resolve, reject) => {
+            let boards = await getBoards();
+
+            const board = boards.find(board => {
+                return board.name === newBoard.name;
+            });
+
+            if (board) {
+                resolve(new ResultFormatter(undefined , '400'));
+            } else {
+                boards.push(newBoard);
+                await setBoards(boards);
+
+                resolve(new ResultFormatter(newBoard));
+            }
+        });
+    },
+
+    updateBoard: newBoard => {
+        return new Promise(async (resolve, reject) => {
+            let boards = await getBoards();
+            let updatedBoard;
+
+            boards = boards.map((board) => {
+                if (board.name === newBoard.name) {
+                    updatedBoard = {
+                        ...board,
+                        ...newBoard
+                    };
+                    return updatedBoard;
                 }
+                return board;
             });
+
+            await setBoards(boards);
+
+            resolve(new ResultFormatter(updatedBoard));
+        });
+    },
+
+    deleteBoard: boardName => {
+        return new Promise(async (resolve, reject) => {
+           let boards = await getBoards();
+
+           boards = boards.filter((board) => {
+               return board.name !== boardName;
+           });
+
+           resolve(setBoards(boards));
         });
     }
-
-    static createBoard(board){
-        return new Promise((resolve, reject) => {
-            fs.readFile('./src/store/boards.json', (err, data) => {
-                if (err) throw err;
-                let boardsArray = [];
-                if (data.toString()) {
-                    boardsArray = JSON.parse(data.toString());
-                }
-                boardsArray.push(board);
-
-                let writeStream = fs.createWriteStream('./src/store/boards.json', { flags: 'w' });
-                writeStream.write(JSON.stringify(boardsArray, null, 4));
-                writeStream.end();
-
-                writeStream.on("finish", () => {
-                    resolve('Board successfully created!')
-                })
-            });
-        });
-    }
-
-    static updateBoard(board){
-        return new Promise((resolve, reject) => {
-            fs.readFile('./src/store/boards.json', (err, data) => {
-                if (err) throw err;
-                if (data.toString()) {
-                    let boardsArray = JSON.parse(data.toString());
-                    boardsArray = boardsArray.map((currentBoard) => {
-                        if (currentBoard.name === board.name) {
-                            return board;
-                        }
-
-                        return currentBoard;
-                    });
-                    let writeStream = fs.createWriteStream('./src/store/boards.json', { flags: 'w' });
-                    writeStream.write(JSON.stringify(boardsArray, null, 4));
-                    writeStream.end();
-
-                    writeStream.on("finish", () => {
-                        resolve('Board successfully updated!')
-                    });
-                } else {
-                    resolve('Boards is empty!')
-                }
-            });
-        });
-    }
-
-    static deleteBoard(boardName){
-        return new Promise((resolve, reject) => {
-            fs.readFile('./src/store/boards.json', (err, data) => {
-                if (err) throw err;
-                if (data.toString()) {
-                    let boardsArray = JSON.parse(data.toString());
-                    console.log(boardName);
-                    boardsArray = boardsArray.filter((currentBoard) => {
-                        return currentBoard.name !== boardName;
-                    });
-                    console.log(boardsArray);
-                    let writeStream = fs.createWriteStream('./src/store/boards.json', { flags: 'w' });
-                    writeStream.write(JSON.stringify(boardsArray, null, 4));
-                    writeStream.end();
-
-                    writeStream.on("finish", () => {
-                        resolve('Board successfully deleted!')
-                    });
-                } else {
-                    resolve('Boards is empty!')
-                }
-            });
-        });
-    }
-}
+};

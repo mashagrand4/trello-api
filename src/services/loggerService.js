@@ -2,10 +2,6 @@ import winston from "winston";
 
 export default class LoggerService {
     constructor() {
-        const consoles = new winston.transports.Console({
-            format: winston.format.simple(),
-        });
-
         this.logger = winston.createLogger({
             transports: [
                 new winston.transports.File({
@@ -22,15 +18,17 @@ export default class LoggerService {
         });
 
         if (process.env.NODE_ENV !== 'production') {
-            this.logger.add(consoles);
+            this.logger.clear().add(new winston.transports.Console({
+                format: winston.format.simple(),
+            }));
         }
     }
 
-    async logError(message) {
+    logError(message) {
         this.logger.error(message);
     }
 
-    async logInfo(message) {
+    logInfo(message) {
         this.logger.info(message);
     }
 }

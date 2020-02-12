@@ -5,12 +5,8 @@ export default class CardService {
         return Card.getAllCards();
     }
 
-    static createCard(boardName, card) {
-        const cardToCreate = {
-            ...card,
-            boardName
-        };
-        return Card.createCard(cardToCreate);
+    static createCard(newCard) {
+        return Card.createCard(newCard);
     }
 
     static updateCard(card) {

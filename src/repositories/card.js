@@ -1,89 +1,67 @@
-import fs from 'fs';
-import Board from "./board";
+import {getCards, setCards} from "./helpers/cards";
 
-export default class Card {
-    static getAllCards(){
+export default {
+    getAllCards: () => {
         return new Promise((resolve, reject) => {
-            fs.readFile('./src/store/cards.json', (err, data) => {
-                if (err) throw err;
-                const cards = data.toString();
-                resolve(cards);
-            });
+            resolve(getCards());
         });
+    },
 
-    }
+    createCard: newCard => {
+        return new Promise( async (resolve, reject) => {
+            let cards = await getCards();
 
-    static createCard(card){
-        return new Promise( (resolve, reject) => {
-            fs.readFile('./src/store/cards.json', (err, data) => {
-                if (err) throw err;
-                let cardsArray = [];
-                if (data.toString()) {
-                    cardsArray = JSON.parse(data.toString());
-                }
-                cardsArray.push(card);
-                
-                let writeStream = fs.createWriteStream('./src/store/cards.json', { flags: 'w' });
-                writeStream.write(JSON.stringify(cardsArray, null, 4));
-                writeStream.end();
-
-                writeStream.on("finish", () => {
-                    resolve('Card successfully created!')
-                })
+            const card = cards.find(card => {
+                return card.name === newCard.name;
             });
-        });
-    }
 
-    static updateCard(card){
+            if (card) {
+                reject(400);
+            } else {
+                cards.push(newCard);
+                await setCards(cards);
+
+                resolve(newCard);
+            }
+        });
+    },
+
+    updateCard: newCard => {
+        return new Promise(async (resolve, reject) => {
+            let cards = getCards();
+
+            const card = cards.find(card => {
+                return card.name === newCard.name;
+            });
+
+            if (card) {
+                reject(new Error("400"));
+            } else {
+                cards = cards.map((card) => {
+                    if (card.name === newCard.name) {
+                        return {
+                            ...newCard,
+                            boardName: card.boardName
+                        };
+                    }
+                    return card;
+                });
+                await setCards(cards);
+
+                resolve(newCard);
+            }
+        });
+    },
+
+    deleteCard: cardName => {
         return new Promise((resolve, reject) => {
-            fs.readFile('./src/store/cards.json', (err, data) => {
-                if (err) throw err;
-                if (data.toString()) {
-                    let cardsArray = JSON.parse(data.toString());
-                    cardsArray = cardsArray.map((currentCard) => {
-                        if (currentCard.name === card.name) {
-                            return {
-                                ...card,
-                                boardName: currentCard.boardName
-                            };
-                        }
+            let cards = getCards();
 
-                        return currentCard;
-                    });
-                    let writeStream = fs.createWriteStream('./src/store/cards.json', { flags: 'w' });
-                    writeStream.write(JSON.stringify(cardsArray, null, 4));
-                    writeStream.end();
-
-                    writeStream.on("finish", () => {
-                        resolve('Card successfully updated!')
-                    });
-                } else {
-                    resolve('Cards is empty!')
-                }
+            cards = cards.filter((card) => {
+                return card.name !== cardName;
             });
+
+            resolve(setCards(cards));
         });
     }
-
-    static deleteCard(cardName){
-        return new Promise((resolve, reject) => {
-            fs.readFile('./src/store/cards.json', (err, data) => {
-                if (err) throw err;
-                if (data.toString()) {
-                    let cardsArray = JSON.parse(data.toString());
-                    cardsArray = cardsArray.filter((currentCard) => {
-                        return currentCard.name !== cardName;
-                    });
-                    let writeStream = fs.createWriteStream('./src/store/cards.json', { flags: 'w' });
-                    writeStream.write(JSON.stringify(cardsArray, null, 4));
-                    writeStream.end();
-
-                    writeStream.on("finish", () => {
-                        resolve('Card successfully deleted!')
-                    });
-                } else {
-                    resolve('Cards is empty!')
-                }
-            });
-        });
-    }
-}
+};
