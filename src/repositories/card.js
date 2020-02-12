@@ -1,4 +1,5 @@
 import {getCards, setCards} from "./helpers/cards";
+import ResultFormatter from "./helpers/resultFormatter";
 
 export default {
     getAllCards: () => {
@@ -16,46 +17,38 @@ export default {
             });
 
             if (card) {
-                reject(400);
+                resolve(new ResultFormatter(undefined , '400'));
             } else {
                 cards.push(newCard);
                 await setCards(cards);
 
-                resolve(newCard);
+                resolve(new ResultFormatter(newCard));
             }
         });
     },
 
     updateCard: newCard => {
         return new Promise(async (resolve, reject) => {
-            let cards = getCards();
+            let cards = await getCards();
 
-            const card = cards.find(card => {
-                return card.name === newCard.name;
+            cards = cards.map((card) => {
+                if (card.name === newCard.name) {
+                    return {
+                        ...newCard,
+                    };
+                }
+                return card;
             });
 
-            if (card) {
-                reject(new Error("400"));
-            } else {
-                cards = cards.map((card) => {
-                    if (card.name === newCard.name) {
-                        return {
-                            ...newCard,
-                            boardName: card.boardName
-                        };
-                    }
-                    return card;
-                });
-                await setCards(cards);
+            await setCards(cards);
 
-                resolve(newCard);
-            }
+            resolve(new ResultFormatter(newCard));
         });
     },
 
     deleteCard: cardName => {
-        return new Promise((resolve, reject) => {
-            let cards = getCards();
+        return new Promise(async (resolve, reject) => {
+            let cards = await getCards();
 
             cards = cards.filter((card) => {
                 return card.name !== cardName;
