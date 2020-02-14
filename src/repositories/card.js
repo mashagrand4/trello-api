@@ -1,5 +1,4 @@
 import {getCards, setCards} from "./helpers/cards";
-import ResultFormatter from "./helpers/resultFormatter";
 
 export default {
     getAllCards: () => {
@@ -17,12 +16,10 @@ export default {
             });
 
             if (card) {
-                resolve(new ResultFormatter(undefined , '400'));
             } else {
                 cards.push(newCard);
                 await setCards(cards);
 
-                resolve(new ResultFormatter(newCard));
             }
         });
     },
@@ -42,7 +39,6 @@ export default {
 
             await setCards(cards);
 
-            resolve(new ResultFormatter(newCard));
         });
     },
 

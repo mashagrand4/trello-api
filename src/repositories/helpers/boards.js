@@ -16,16 +16,8 @@ export const getBoards = async () => {
     return currentBoards;
 };
 
-export const setBoards = async boards => {
+export const setBoards = async (boards) => {
     const data = JSON.stringify(boards, null, 4);
-
-    try {
-        await writeToFile(filePath, data);
-        currentBoards = boards;
-
-        return(200);
-    }
-    catch(err) {
-        return err;
-    }
+    await writeToFile(filePath, data);
+    currentBoards = boards;
 };

@@ -1,8 +1,4 @@
-import LoggerService from "../services/loggerService";
-
-const logger = new LoggerService();
-
-export const logRequest = (req, res, next) => {
+export const logRequest = logger => (req, res, next) => {
     logger.logInfo(req.path);
     next();
 };

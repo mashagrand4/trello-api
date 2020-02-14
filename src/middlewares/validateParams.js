@@ -1,47 +1,43 @@
+import BoardSchema from "./schemas/BoardSchema";
 import CardSchema from "./schemas/CardSchema";
+import Joi from '@hapi/joi';
 
 export default {
     validateBoardName: (req, res, next) => {
-        const params = req.body;
-
-        if (!params || !params.boardName || typeof params.boardName !== "string") {
-            next(new Error('Invalid params'));
-        }
+        Joi.string().min(3).validate(req.body.boardName);
         next();
     },
 
     validateCardName: (req, res, next) => {
-        const params = req.body;
-
-        if (!params || !params.cardName || typeof params.cardName !== "string") {
-            next(new Error('Invalid params'));
-        }
+        Joi.string().min(3).validate(req.body.cardName);
         next();
     },
 
     validateBoardFields: async (req, res, next) => {
-        const {name, description, color} = req.body;
-        const params = {name, description, color};
+        const params = req.body;
 
         try {
-            await BoardSchema.validateAsync(params);
-            req.body = params;
+            await BoardSchema.validateAsync(params, {
+                allowUnknown: true,
+                abortEarly: false
+            });
             next();
         } catch (err) {
-            next(new Error('Invalid params'))
+            next(err)
         }
     },
 
     validateCardFields: async (req, res, next) => {
-        const {name, description, estimate, status, due_date, labels, boardName} = req.body;
-        const params = {name, description, estimate, status, due_date, labels, boardName};
+        const params = req.body;
 
         try {
-            await CardSchema.validateAsync(params);
-            req.body = params;
+            await CardSchema.validateAsync(params, {
+                allowUnknown: true,
+                abortEarly: false
+            });
             next();
         } catch (err) {
-            next(new Error('Invalid params'))
+            next(err)
         }
     },
 };
