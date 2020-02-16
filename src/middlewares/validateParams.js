@@ -29,7 +29,7 @@ export default {
                 abortEarly: false
             });
         } catch (err) {
-            next(err);
+            next();
         }
         next();
     },

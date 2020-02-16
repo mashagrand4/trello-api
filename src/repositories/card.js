@@ -1,4 +1,5 @@
 import {getCards, setCards} from "./helpers/cards";
+import ServerError from "./errors/ServerError";
 
 export default {
     getAllCards: async () => {
@@ -13,7 +14,7 @@ export default {
         });
 
         if (card) {
-            throw new Error(`Card with name: ${newCard.name} does not exist!`);
+            throw new ServerError(`Card with name: ${newCard.name} does not exist!`);
         }
 
         cards.push(newCard);
@@ -30,7 +31,7 @@ export default {
         });
 
         if (!card) {
-            throw new Error(`Card with name: ${newCard.name} does not exist!`);
+            throw new ServerError(`Card with name: ${newCard.name} does not exist!`);
         }
 
         cards = cards.map((card) => {
@@ -55,7 +56,7 @@ export default {
         });
 
         if (!card) {
-            throw new Error(`Card with name: ${cardName} does not exist!`);
+            throw new ServerError(`Card with name: ${cardName} does not exist!`);
         }
 
         cards = cards.filter((card) => {

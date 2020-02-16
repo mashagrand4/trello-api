@@ -1,4 +1,5 @@
 import {getBoards, setBoards} from "./helpers/boards";
+import ServerError from "./errors/ServerError";
 
 export default {
     getAllBoards: async () => {
@@ -13,7 +14,7 @@ export default {
         });
 
         if (!board) {
-            throw new Error(`Board with name: ${boardName} does not exist!`);
+            throw new ServerError(`Board with name: ${boardName} does not exist!`);
         }
 
         return board;
@@ -33,7 +34,7 @@ export default {
         });
 
         if (board) {
-            throw new Error(`Board with name: ${newBoard.name} already exists!`);
+            throw new ServerError(`Board with name: ${newBoard.name} already exists!`);
         }
 
         boards.push(newBoard);
@@ -50,7 +51,7 @@ export default {
         });
 
         if (!board) {
-            throw new Error(`Board with name: ${newBoard.name} does not exist!`);
+            throw new ServerError(`Board with name: ${newBoard.name} does not exist!`);
         }
 
         let updatedBoard = {
@@ -80,7 +81,7 @@ export default {
            });
 
            if (!board) {
-               throw new Error(`Board with name: ${boardName} does not exist!`);
+               throw new ServerError(`Board with name: ${boardName} does not exist!`);
            }
 
            boards = boards.filter((board) => {
