@@ -1,15 +1,9 @@
 [
     {
         "name": "board1",
-        "description": "board1 description",
-        "color": "#fff",
+        "description": "ertyukmjnbhe",
+        "color": "3456789",
         "create_at": 1581499540538
-    },
-    {
-        "name": "board2",
-        "description": "board2 description",
-        "color": "#000",
-        "create_at": 1581603580817
     },
     {
         "name": "board3",

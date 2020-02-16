@@ -18,12 +18,12 @@
         "boardName": "board1"
     },
     {
+        "boardName": "board3",
         "name": "card3",
-        "description": "card3 description",
-        "estimate": "16",
-        "status": "TO DO",
-        "due_date": "33/44/5555",
-        "labels": "['label']",
-        "boardName": "board2"
+        "description": "super card",
+        "estimate": "8",
+        "status": "DONE",
+        "due_date": "22/02/2020",
+        "labels": "['high']"
     }
 ]

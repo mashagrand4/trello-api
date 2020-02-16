@@ -7,7 +7,6 @@ export default class Card {
         } catch (error) {
             next(error);
         }
-
     };
 
     static async createCard(req, res, next) {
@@ -31,7 +30,8 @@ export default class Card {
     static async deleteCard(req, res, next) {
         const {cardName} = req.body;
         try {
-            res.sendStatus(await CardService.deleteCard(cardName));
+            await CardService.deleteCard(cardName);
+            res.sendStatus(200);
         } catch (error) {
             next(error);
         }

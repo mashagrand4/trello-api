@@ -40,7 +40,8 @@ export default class Board {
     static async deleteBoard(req, res, next) {
         const {boardName} = req.body;
         try {
-            res.sendStatus(await BoardService.deleteBoard(boardName));
+            await BoardService.deleteBoard(boardName);
+            res.sendStatus(200);
         } catch (error) {
             next(error);
         }
