@@ -1,56 +1,67 @@
 import {getCards, setCards} from "./helpers/cards";
 
 export default {
-    getAllCards: () => {
-        return new Promise((resolve, reject) => {
-            resolve(getCards());
-        });
+    getAllCards: async () => {
+        return await getCards();
     },
 
-    createCard: newCard => {
-        return new Promise( async (resolve, reject) => {
-            let cards = await getCards();
+    createCard: async newCard => {
+        let cards = await getCards();
 
-            const card = cards.find(card => {
-                return card.name === newCard.name;
-            });
+        const card = cards.find(card => {
+            return card.name === newCard.name;
+        });
 
-            if (card) {
-            } else {
-                cards.push(newCard);
-                await setCards(cards);
+        if (card) {
+            throw new Error(`Card with name: ${newCard.name} does not exist!`);
+        }
 
+        cards.push(newCard);
+        await setCards(cards);
+
+        return newCard;
+    },
+
+    updateCard: async newCard => {
+        let cards = await getCards();
+
+        const card = cards.find(card => {
+            return card.name === newCard.name;
+        });
+
+        if (!card) {
+            throw new Error(`Card with name: ${newCard.name} does not exist!`);
+        }
+
+        cards = cards.map((card) => {
+            if (card.name === newCard.name) {
+                return {
+                    ...newCard,
+                };
             }
+            return card;
         });
+
+        await setCards(cards);
+
+        return newCard;
     },
 
-    updateCard: newCard => {
-        return new Promise(async (resolve, reject) => {
-            let cards = await getCards();
+    deleteCard: async cardName => {
+        let cards = await getCards();
 
-            cards = cards.map((card) => {
-                if (card.name === newCard.name) {
-                    return {
-                        ...newCard,
-                    };
-                }
-                return card;
-            });
-
-            await setCards(cards);
-
+        const card = cards.find(card => {
+            return card.name === cardName;
         });
-    },
 
-    deleteCard: cardName => {
-        return new Promise(async (resolve, reject) => {
-            let cards = await getCards();
+        if (!card) {
+            throw new Error(`Card with name: ${cardName} does not exist!`);
+        }
 
-            cards = cards.filter((card) => {
-                return card.name !== cardName;
-            });
-
-            resolve(setCards(cards));
+        cards = cards.filter((card) => {
+            return card.name !== cardName;
         });
+
+        await setCards(cards);
     }
 };

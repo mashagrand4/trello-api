@@ -9,7 +9,6 @@ export const getBoards = async () => {
         if (boards) {
             return JSON.parse(boards);
         }
-
         return [];
     }
 

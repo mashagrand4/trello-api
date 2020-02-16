@@ -15,29 +15,19 @@ export default {
 
     validateBoardFields: async (req, res, next) => {
         const params = req.body;
-
-        try {
-            await BoardSchema.validateAsync(params, {
-                allowUnknown: true,
-                abortEarly: false
-            });
-            next();
-        } catch (err) {
-            next(err)
-        }
+        await BoardSchema.validateAsync(params, {
+            allowUnknown: true,
+            abortEarly: false
+        });
+        next();
     },
 
     validateCardFields: async (req, res, next) => {
         const params = req.body;
-
-        try {
-            await CardSchema.validateAsync(params, {
-                allowUnknown: true,
-                abortEarly: false
-            });
-            next();
-        } catch (err) {
-            next(err)
-        }
+        await CardSchema.validateAsync(params, {
+            allowUnknown: true,
+            abortEarly: false
+        });
+        next();
     },
 };

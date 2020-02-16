@@ -2,9 +2,8 @@ import CardService from "../services/cardService";
 
 export default class Card {
     static async getAllCards(req, res, next) {
-        const {boardName} = req.query;
         try {
-            res.send(await CardService.getAllCards(boardName));
+            res.send(await CardService.getAllCards());
         } catch (error) {
             next(error);
         }

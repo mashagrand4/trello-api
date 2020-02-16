@@ -1,8 +1,4 @@
-export const handleErrors = logger => (error, req, res) => {
+export const handleErrors = logger => (error, req, res, next) => {
     logger.logError(error.message);
-
-    console.log('erferf');
-    console.log(error);
-
     res.status(400).send(error.message)
 };

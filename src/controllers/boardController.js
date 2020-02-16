@@ -14,7 +14,6 @@ export default class Board {
         try {
             res.send(await BoardService.getBoardByName(boardName));
         } catch (error) {
-
             next(error);
         }
     };

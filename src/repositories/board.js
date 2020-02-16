@@ -37,7 +37,6 @@ export default {
         }
 
         boards.push(newBoard);
-
         await setBoards(boards);
 
         return newBoard;
@@ -45,24 +44,44 @@ export default {
 
     updateBoard: async newBoard => {
         let boards = await getBoards();
-        let updatedBoard;
 
-        boards = boards.map((board) => {
+        const board = boards.find(board => {
+            return board.name === newBoard.name;
+        });
+
+        if (!board) {
+            throw new Error(`Board with name: ${newBoard.name} does not exist!`);
+        }
+
+        let updatedBoard = {
+            name: newBoard.name,
+            description: newBoard.description,
+            color: newBoard.color,
+            create_at: board.create_at
+        };
+
+        boards = boards.map(board => {
             if (board.name === newBoard.name) {
-                updatedBoard = {
-                    ...board,
-                    ...newBoard
-                };
                 return updatedBoard;
             }
             return board;
         });
 
         await setBoards(boards);
+
+        return updatedBoard;
     },
 
     deleteBoard: async boardName => {
            let boards = await getBoards();
+
+           const board = boards.find(board => {
+               return board.name === boardName;
+           });
+
+           if (!board) {
+               throw new Error(`Board with name: ${boardName} does not exist!`);
+           }
 
            boards = boards.filter((board) => {
                return board.name !== boardName;

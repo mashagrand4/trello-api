@@ -9,7 +9,6 @@ export const getCards = async () => {
         if (cards) {
             return JSON.parse(cards);
         }
-
         return [];
     }
 
@@ -18,13 +17,6 @@ export const getCards = async () => {
 
 export const setCards = async (cards) => {
     const data = JSON.stringify(cards, null, 4);
-
-    try {
-        await writeToFile(filePath, data);
-        currentCards = cards;
-
-        return(200);
-    } catch(err) {
-        return err
-;    }
+    await writeToFile(filePath, data);
+    currentCards = cards;
 };
