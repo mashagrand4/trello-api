@@ -23,7 +23,6 @@ export default class Board {
         try {
             res.send(await BoardService.createBoard(board));
         } catch (error) {
-            console.log(error);
             next(error);
         }
     };

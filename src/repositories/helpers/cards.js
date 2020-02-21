@@ -7,7 +7,8 @@ export const getCards = async () => {
     if(!currentCards) {
         const cards = await readFile(filePath);
         if (cards) {
-            return JSON.parse(cards);
+            currentCards = JSON.parse(cards);
+            return currentCards;
         }
         return [];
     }

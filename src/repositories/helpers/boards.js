@@ -7,7 +7,8 @@ export const getBoards = async () => {
     if(!currentBoards) {
         const boards = await readFile(filePath);
         if (boards) {
-            return JSON.parse(boards);
+            currentBoards = JSON.parse(boards);
+            return currentBoards;
         }
         return [];
     }
