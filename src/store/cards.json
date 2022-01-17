@@ -1,0 +1,29 @@
+[
+    {
+        "name": "card1",
+        "description": "card1 description",
+        "estimate": "9",
+        "status": "IN PROGRESS",
+        "due_date": "33/44/5555",
+        "labels": "['label']",
+        "boardName": "board1"
+    },
+    {
+        "name": "card2",
+        "description": "card2 description",
+        "estimate": "8",
+        "status": "DONE",
+        "due_date": "33/44/5555",
+        "labels": "['label']",
+        "boardName": "board1"
+    },
+    {
+        "boardName": "board3",
+        "name": "card3",
+        "description": "super card",
+        "estimate": "8",
+        "status": "DONE",
+        "due_date": "22/02/2020",
+        "labels": "['high']"
+    }
+]
